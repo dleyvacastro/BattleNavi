@@ -18,21 +18,12 @@ class App extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              const Text('Start Game'),
               ElevatedButton(
                 onPressed: () {
                   Get.to(() => Game());
                 },
                 child: const Text('Start Game'),
               ),
-              ElevatedButton(
-                onPressed: (){
-                  var ships = controller.ships;
-                  print("Ships: $ships");
-                  print("Current Player: ${controller.currentPlayer}");
-                },
-                child: const Text('Show Ships'),
-              )
             ],
           ),
         ),

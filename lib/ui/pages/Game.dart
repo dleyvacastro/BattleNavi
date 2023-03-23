@@ -9,9 +9,37 @@ class Game extends StatefulWidget {
 }
 
 class _GameState extends State<Game> {
+  var icons = {
+    "U": Icons.arrow_upward,
+    "R": Icons.arrow_forward,
+    "D": Icons.arrow_downward,
+    "L": Icons.arrow_back,
+  };
+
+  
   @override
   Widget build(BuildContext context) {
     GameController controller = Get.find();
+    
+    Icon getBoardIcon(index){
+      if (controller.currentPlayer == "A"){
+        if (controller.ships.contains(index)){
+          return const Icon(Icons.star);
+        } else {
+          return const Icon(Icons.question_mark);
+        }
+      } else {
+        if (controller.pressed.contains(index)){
+          if (controller.ships.contains(index)){
+            return const Icon(Icons.circle);
+          } else {
+            return const Icon(Icons.close);
+          }
+        } else {
+          return const Icon(Icons.question_mark);
+        }
+      }
+    }
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
@@ -29,15 +57,27 @@ class _GameState extends State<Game> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Text('Let\'s Play', style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
-                      ElevatedButton(
+                      Container(
+                        margin: const EdgeInsets.only(right: 20),
+                        child: Text('Let\'s Play Player ${controller.currentPlayer}', style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
+                      ),
+                      controller.currentPlayer == "B" ? ElevatedButton(
                         onPressed: () {
                           // go back
                           controller.changePlayer();
+                          controller.reset();
                           Get.back();
                         },
-                        child: Text('Return'),
-                      )
+                        child: const Text('Return'),
+                      ) : ElevatedButton.icon(
+                        onPressed: () {
+                          controller.rotateOrientation();
+                          setState(() {
+
+                          });
+                        },
+                        icon: Icon(icons[controller.orientation]), label: const Text('Rotate'),
+                      ),
                     ],
                   ),
                 ),
@@ -56,8 +96,9 @@ class _GameState extends State<Game> {
                             controller.addShip(index);
                           } else{
                             controller.addPressed(index);
-                            setState(() {});
                           }
+                          setState(() {});
+                          controller.checkWin(index);
                         },
                         child: GridTile(
 
@@ -84,7 +125,7 @@ class _GameState extends State<Game> {
                               ),
                             ),
                           ),
-                          child: Icon(controller.checkShip(index) && controller.pressed.contains(index) ? Icons.circle : !controller.checkShip(index) && controller.pressed.contains(index) ? Icons.close : Icons.question_mark),
+                          child: getBoardIcon(index),
                         ))),
                   ),
                 )
