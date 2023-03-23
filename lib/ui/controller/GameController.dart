@@ -1,5 +1,5 @@
-import 'dart:io';
-
+import 'package:confetti/confetti.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class GameController extends GetxController {
@@ -10,38 +10,92 @@ class GameController extends GetxController {
   //var score = 0.obs;
   var orientation = "U";
   var icons = ["U","R","D","L"].obs;
+  var valid = false.obs;
+  var hasWinner = false.obs;
 
   void changePlayer() {
     currentPlayer = currentPlayer == "A" ? "B" : "A";
   }
 
+  void showInvalidDialog(context, String message) {
+    showDialog<String>(
+      context: context,
+      builder: (BuildContext context) => Dialog(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            const SizedBox(height: 15),
+            Text(message),
+            const SizedBox(height: 15),
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text('Close'),
+            ),
+          ],
+        ),
+      )
+    );
+  }
+
   void addShip(int ship) {
     if (!ships.contains(ship)){
-      ships.add(ship);
-
+      bool valid = true;
       if (orientation == "U"){
-        ships.add(ship - 5);
+        if (ship > 4){
+          ships.add(ship);
+          ships.add(ship - 5);
+          counter += 2;
+        } else {
+          valid = false;
+          print('invalid');
+        }
       } else if (orientation == "R"){
-        ships.add(ship + 1);
+        if (ship % 5 != 4){
+          ships.add(ship);
+          ships.add(ship + 1);
+          counter += 2;
+        } else {
+          valid = false;
+        }
       } else if (orientation == "D"){
-        ships.add(ship + 5);
+        if (ship < 20){
+          ships.add(ship);
+          ships.add(ship + 5);
+          counter += 2;
+        } else {
+          valid = false;
+        }
       } else if (orientation == "L"){
-        ships.add(ship - 1);
+        if (ship % 5 != 0){
+          ships.add(ship);
+          ships.add(ship - 1);
+          counter += 2;
+        }  else {
+          valid = false;
+        }
       }
-      counter += 2;
+      if(!valid){
+        //Get.snackbar("Invalid Position", "You can't place the ship there");
+        showInvalidDialog(Get.context, 'Invalid position.');
+      }
 
     }
+
+
 
     if (counter >= 4 && currentPlayer == "A") {
       Get.back();
       currentPlayer = "B";
     }
-
-    print("Counter: $counter");
   }
 
   void addPressed(int ship){
-    pressed.add(ship);
+    if (!pressed.contains(ship)){
+      pressed.add(ship);
+    }
   }
 
   List validPosition(int index){
@@ -78,7 +132,7 @@ class GameController extends GetxController {
   }
 
   void checkWin(ship){
-    bool win = true;
+    bool win = (ships.isEmpty || pressed.isEmpty) ? false : true;
     for (var i in ships){
       if (!pressed.contains(i)){
         win = false;
@@ -86,7 +140,7 @@ class GameController extends GetxController {
     }
     if (win){
       Get.back();
-      Get.snackbar("You Win", "You Win in ${pressed.length} shots");
+      showInvalidDialog(Get.context, "You Win in ${pressed.length} shots");
       reset();
     }
 
@@ -96,5 +150,6 @@ class GameController extends GetxController {
     pressed.clear();
     orientation = "U";
     counter = 0.obs;
+    currentPlayer = "A";
   }
 }

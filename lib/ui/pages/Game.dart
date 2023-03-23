@@ -1,5 +1,9 @@
+import 'dart:math';
+
+import 'package:batlle/my_flutter_app_icons.dart';
 import 'package:batlle/ui/controller/GameController.dart';
 import 'package:batlle/ui/pages/MyHome.dart';
+import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -16,27 +20,33 @@ class _GameState extends State<Game> {
     "L": Icons.arrow_back,
   };
 
+  GameController controller = Get.find();
+
+  @override
+  void initState() {
+    super.initState();
+  }
   
   @override
   Widget build(BuildContext context) {
-    GameController controller = Get.find();
+
     
     Icon getBoardIcon(index){
       if (controller.currentPlayer == "A"){
         if (controller.ships.contains(index)){
-          return const Icon(Icons.star);
+          return const Icon(Icons.directions_boat, color: Colors.brown);
         } else {
-          return const Icon(Icons.question_mark);
+          return const Icon(Icons.waves, color: Colors.blue);
         }
       } else {
         if (controller.pressed.contains(index)){
           if (controller.ships.contains(index)){
-            return const Icon(Icons.circle);
+            return const Icon(Icons.whatshot,color: Colors.red);
           } else {
-            return const Icon(Icons.close);
+            return const Icon(Icons.close, color: Colors.grey);
           }
         } else {
-          return const Icon(Icons.question_mark);
+          return const Icon(Icons.waves, color: Colors.blue,);
         }
       }
     }
@@ -73,7 +83,6 @@ class _GameState extends State<Game> {
                         onPressed: () {
                           controller.rotateOrientation();
                           setState(() {
-
                           });
                         },
                         icon: Icon(icons[controller.orientation]), label: const Text('Rotate'),
@@ -92,7 +101,7 @@ class _GameState extends State<Game> {
                     (index) => InkWell(
                         onTap: () {
                           if (controller.currentPlayer == "A"){
-                            print("$index");
+
                             controller.addShip(index);
                           } else{
                             controller.addPressed(index);
