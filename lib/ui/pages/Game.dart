@@ -37,6 +37,7 @@ class _GameState extends State<Game> {
           return const Icon(Icons.directions_boat, color: Colors.brown);
         } else {
           return const Icon(Icons.waves, color: Colors.blue);
+
         }
       } else {
         if (controller.pressed.contains(index)){
@@ -44,9 +45,11 @@ class _GameState extends State<Game> {
             return const Icon(Icons.whatshot,color: Colors.red);
           } else {
             return const Icon(Icons.close, color: Colors.grey);
+
           }
         } else {
           return const Icon(Icons.waves, color: Colors.blue,);
+
         }
       }
     }
@@ -87,6 +90,17 @@ class _GameState extends State<Game> {
                         },
                         icon: Icon(icons[controller.orientation]), label: const Text('Rotate'),
                       ),
+                      Container(
+                        margin: const EdgeInsets.only(left: 20),
+                        child: controller.currentPlayer == "A" && controller.counter >=4 ? ElevatedButton(
+                          onPressed: () {
+                            Get.back();
+                            controller.changePlayer();
+                          },
+                          child: const Text('Return'),
+                        ) : Container(),
+                      ),
+
                     ],
                   ),
                 ),

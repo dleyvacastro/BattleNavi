@@ -41,10 +41,16 @@ class GameController extends GetxController {
   }
 
   void addShip(int ship) {
-    if (!ships.contains(ship)){
+    if (counter > 3){
+      // remove the first two elements of the list
+      ships.removeRange(0, 2);
+      counter -= 2;
+    }
+
+    if (!ships.contains(ship) && counter <=3){
       bool valid = true;
       if (orientation == "U"){
-        if (ship > 4){
+        if (ship > 4 && !ships.contains(ship - 5)){
           ships.add(ship);
           ships.add(ship - 5);
           counter += 2;
@@ -53,7 +59,7 @@ class GameController extends GetxController {
           print('invalid');
         }
       } else if (orientation == "R"){
-        if (ship % 5 != 4){
+        if (ship % 5 != 4 && !ships.contains(ship + 1)){
           ships.add(ship);
           ships.add(ship + 1);
           counter += 2;
@@ -61,7 +67,7 @@ class GameController extends GetxController {
           valid = false;
         }
       } else if (orientation == "D"){
-        if (ship < 20){
+        if (ship < 20 && !ships.contains(ship + 5)){
           ships.add(ship);
           ships.add(ship + 5);
           counter += 2;
@@ -69,7 +75,7 @@ class GameController extends GetxController {
           valid = false;
         }
       } else if (orientation == "L"){
-        if (ship % 5 != 0){
+        if (ship % 5 != 0 && !ships.contains(ship - 1)){
           ships.add(ship);
           ships.add(ship - 1);
           counter += 2;
@@ -86,10 +92,10 @@ class GameController extends GetxController {
 
 
 
-    if (counter >= 4 && currentPlayer == "A") {
-      Get.back();
-      currentPlayer = "B";
-    }
+    // //if (counter >= 4 && currentPlayer == "A") {
+    //   //Get.back();
+    //   currentPlayer = "B";
+    // }
   }
 
   void addPressed(int ship){
