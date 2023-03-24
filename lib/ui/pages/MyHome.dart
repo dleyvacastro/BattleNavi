@@ -1,4 +1,5 @@
 import 'package:batlle/ui/pages/Game.dart';
+import 'package:confetti/confetti.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:batlle/ui/controller/GameController.dart';
@@ -11,7 +12,6 @@ class App extends StatefulWidget {
 class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
-    GameController controller = Get.find();
 
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
@@ -28,7 +28,7 @@ class _AppState extends State<App> {
                 margin: const EdgeInsets.all(30),
 
                 child: const Text(
-                  'Battlership Game',
+                  'Battleship Game',
                   style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold, color: Colors.blue),
                 ),
               ),

@@ -23,32 +23,27 @@ class _GameState extends State<Game> {
   GameController controller = Get.find();
 
   @override
-  void initState() {
-    super.initState();
-  }
-  
-  @override
   Widget build(BuildContext context) {
 
     
     Icon getBoardIcon(index){
       if (controller.currentPlayer == "A"){
         if (controller.ships.contains(index)){
-          return const Icon(Icons.directions_boat, color: Colors.brown);
+          return const Icon(Icons.directions_boat, color: Colors.brown, size: 50,);
         } else {
-          return const Icon(Icons.waves, color: Colors.blue);
+          return const Icon(Icons.waves, color: Colors.blue, size: 50,);
 
         }
       } else {
         if (controller.pressed.contains(index)){
           if (controller.ships.contains(index)){
-            return const Icon(Icons.whatshot,color: Colors.red);
+            return const Icon(Icons.whatshot,color: Colors.red, size: 50,);
           } else {
-            return const Icon(Icons.close, color: Colors.grey);
+            return const Icon(Icons.close, color: Colors.grey, size: 50,);
 
           }
         } else {
-          return const Icon(Icons.waves, color: Colors.blue,);
+          return const Icon(Icons.waves, color: Colors.blue, size: 50,);
 
         }
       }
@@ -66,7 +61,7 @@ class _GameState extends State<Game> {
                 Container(
                   // alingto center
                   alignment: Alignment.center,
-                  margin: const EdgeInsets.only(top: 20, bottom: 20),
+                  margin: const EdgeInsets.only(top: 20),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
@@ -74,6 +69,16 @@ class _GameState extends State<Game> {
                         margin: const EdgeInsets.only(right: 20),
                         child: Text('Let\'s Play Player ${controller.currentPlayer}', style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
                       ),
+                    ],
+                  ),
+                ),
+                Container(
+                  // alingto center
+                  alignment: Alignment.center,
+                  /*margin: const EdgeInsets.only(bottom: 20),*/
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
                       controller.currentPlayer == "B" ? ElevatedButton(
                         onPressed: () {
                           // go back
@@ -100,7 +105,6 @@ class _GameState extends State<Game> {
                           child: const Text('Return'),
                         ) : Container(),
                       ),
-
                     ],
                   ),
                 ),
@@ -112,44 +116,43 @@ class _GameState extends State<Game> {
                   shrinkWrap: true,
                   children: List.generate(
                     25,
-                    (index) => InkWell(
+                        (index) => InkWell(
                         onTap: () {
                           if (controller.currentPlayer == "A"){
-
                             controller.addShip(index);
                           } else{
                             controller.addPressed(index);
                           }
-                          setState(() {});
                           controller.checkWin(index);
+                          setState(() {});
                         },
                         child: GridTile(
 
                             child: Container(
                               width: 10,
                               height: 10,
-                          decoration: const BoxDecoration(
-                            border: Border(
-                              right: BorderSide(
-                                color: Colors.black,
-                                width: 2,
+                              decoration: const BoxDecoration(
+                                border: Border(
+                                  right: BorderSide(
+                                    color: Colors.black,
+                                    width: 2,
+                                  ),
+                                  left: BorderSide(
+                                    color: Colors.black,
+                                    width: 2,
+                                  ),
+                                  top: BorderSide(
+                                    color: Colors.black,
+                                    width: 2,
+                                  ),
+                                  bottom: BorderSide(
+                                    color: Colors.black,
+                                    width: 2,
+                                  ),
+                                ),
                               ),
-                              left: BorderSide(
-                                color: Colors.black,
-                                width: 2,
-                              ),
-                              top: BorderSide(
-                                color: Colors.black,
-                                width: 2,
-                              ),
-                              bottom: BorderSide(
-                                color: Colors.black,
-                                width: 2,
-                              ),
-                            ),
-                          ),
-                          child: getBoardIcon(index),
-                        ))),
+                              child: getBoardIcon(index),
+                            ))),
                   ),
                 )
               ],
