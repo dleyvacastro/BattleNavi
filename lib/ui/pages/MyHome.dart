@@ -42,7 +42,7 @@ class _AppState extends State<App> {
                 margin: const EdgeInsets.all(30),
 
                 child: const Text(
-                  'Game By: Daniel Leyva, Camilo Fernandez, Felipe Martinez, Guillermo Ribero, Juan Luis Avila',
+                  'Game By: Daniel Leyva, Camilo Fernandez, Felipe Martinez, Guillermo Ribero',
                   style: TextStyle(fontSize: 10),
                 ),
               ),
