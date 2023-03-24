@@ -10,6 +10,9 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
+
+  GameController controller = Get.find();
+
   @override
   Widget build(BuildContext context) {
 
