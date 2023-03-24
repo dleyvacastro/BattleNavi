@@ -57,6 +57,10 @@ dev_dependencies:
 flutter:
   assets:
     - fonts/antesdelboom.png
+    - assets/boath_0.png
+    - assets/boath_1.png
+    - assets/boatv_0.png
+    - assets/boatv_1.png
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

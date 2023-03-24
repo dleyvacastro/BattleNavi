@@ -26,13 +26,30 @@ class _GameState extends State<Game> {
   Widget build(BuildContext context) {
 
     
-    Icon getBoardIcon(index){
+    Widget getBoardIcon(index){
       if (controller.currentPlayer == "A"){
         if (controller.ships.contains(index)){
-          return const Icon(Icons.directions_boat, color: Colors.brown, size: 50,);
+          var boatOrientation = controller.orientations[index];
+          if (boatOrientation[0] == "U"){
+            return Image(image: AssetImage("assets/boatv_${boatOrientation[1]}.png"), width: 50, height: 50,);
+          } else if (boatOrientation[0] == "D") {
+            if (boatOrientation[1] == 1) {
+              return Image(image: AssetImage("assets/boatv_0.png"), width: double.infinity, height: double.infinity,);
+            } else {
+              return Image(image: AssetImage("assets/boatv_1.png"), width: double.infinity, height: double.infinity,);
+            }
+          }
+          else if (boatOrientation[0] == "L") {
+            if (boatOrientation[1] == 1) {
+              return Image(image: AssetImage("assets/boath_0.png"), width: double.infinity, height: double.infinity,);
+            } else {
+              return Image(image: AssetImage("assets/boath_1.png"), width: double.infinity, height: double.infinity,);
+            }
+          } else {
+            return Image(image: AssetImage("assets/boath_${boatOrientation[1]}.png"), width: 50, height: 50,);
+          }
         } else {
           return const Icon(Icons.waves, color: Colors.blue, size: 50,);
-
         }
       } else {
         if (controller.pressed.contains(index)){

@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 class GameController extends GetxController {
   var ships = [].obs;
   var pressed = [].obs;
+  var orientations = {}.obs;
   var currentPlayer = "A";
   var counter = 0.obs;
   //var score = 0.obs;
@@ -54,6 +55,8 @@ class GameController extends GetxController {
           ships.add(ship);
           ships.add(ship - 5);
           counter += 2;
+          orientations[ship] = ["U", 0];
+          orientations[ship-5] =  ["U", 1];
         } else {
           valid = false;
           print('invalid');
@@ -63,6 +66,8 @@ class GameController extends GetxController {
           ships.add(ship);
           ships.add(ship + 1);
           counter += 2;
+          orientations[ship] = ["R", 0];
+          orientations[ship+1] =  ["R", 1];
         } else {
           valid = false;
         }
@@ -71,6 +76,8 @@ class GameController extends GetxController {
           ships.add(ship);
           ships.add(ship + 5);
           counter += 2;
+          orientations[ship] = ["D", 0];
+          orientations[ship+5] =  ["D", 1];
         } else {
           valid = false;
         }
@@ -79,6 +86,8 @@ class GameController extends GetxController {
           ships.add(ship);
           ships.add(ship - 1);
           counter += 2;
+          orientations[ship] = ["L", 0];
+          orientations[ship-1] =  ["L", 1];
         }  else {
           valid = false;
         }
