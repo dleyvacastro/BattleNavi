@@ -67,6 +67,9 @@ class _GameState extends State<Game> {
     }
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primarySwatch: controller.currentPlayer == 'A' ? Colors.teal : Colors.red,
+      ),
       home: Scaffold(
           appBar: AppBar(
             title: const Text('Game'),
@@ -92,7 +95,7 @@ class _GameState extends State<Game> {
                 Container(
                   // alingto center
                   alignment: Alignment.center,
-                  /*margin: const EdgeInsets.only(bottom: 20),*/
+                  margin: const EdgeInsets.only(bottom: 16, top: 16),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
@@ -128,7 +131,7 @@ class _GameState extends State<Game> {
 
                 GridView.count(
                   childAspectRatio: MediaQuery.of(context).size.aspectRatio*6/5,
-
+                  padding: const EdgeInsets.only(left: 32, right: 32, top: 16, bottom: 16),
                   crossAxisCount: 5,
                   shrinkWrap: true,
                   children: List.generate(
@@ -143,33 +146,9 @@ class _GameState extends State<Game> {
                           controller.checkWin(index);
                           setState(() {});
                         },
-                        child: GridTile(
 
-                            child: Container(
-                              width: 10,
-                              height: 10,
-                              decoration: const BoxDecoration(
-                                border: Border(
-                                  right: BorderSide(
-                                    color: Colors.black,
-                                    width: 2,
-                                  ),
-                                  left: BorderSide(
-                                    color: Colors.black,
-                                    width: 2,
-                                  ),
-                                  top: BorderSide(
-                                    color: Colors.black,
-                                    width: 2,
-                                  ),
-                                  bottom: BorderSide(
-                                    color: Colors.black,
-                                    width: 2,
-                                  ),
-                                ),
-                              ),
-                              child: getBoardIcon(index),
-                            ))),
+                        child: getBoardIcon(index)
+                    )
                   ),
                 )
               ],

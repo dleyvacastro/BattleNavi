@@ -19,6 +19,9 @@ class _AppState extends State<App> {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Battle Nave GetX',
+      theme: ThemeData(
+        fontFamily: 'Michroma',
+      ),
       home: Scaffold(
         appBar: AppBar(
           title: const Text('Battle Navi'),
